@@ -52,10 +52,10 @@ function playSound(body){
     	sfxToPlay.play();
     	
     	resetSound = false;
-    	setTimeout(function() {
+    	setTimeout(function(){
     		resetSound = true;
     	}, 500);
-    }   
+    }
 }
 
 function loadSfx(){
