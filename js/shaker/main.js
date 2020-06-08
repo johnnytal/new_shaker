@@ -20,7 +20,7 @@ function create(){
     loadSfx();
 
 	if (window.DeviceMotionEvent) {
-	  	window.addEventListener('devicemotion', deviceMotion);
+	  	//window.addEventListener('devicemotion', deviceMotion);
 	}
 	
 	if (window.DeviceOrientationEvent) {
@@ -47,8 +47,8 @@ function handleOrientation(event){
 	beta = Math.round(event.beta);  // -180,180 Y	
 	
 	Phaser.Actions.Call(group.getChildren(), function(item) {
-        item.body.gravity.x = (Math.random() * 5) + gamma / 5;
-        item.body.gravity.y = (Math.random() * 5) + beta / 5;
+        item.body.gravity.x = (Math.random() * 5) + gamma;
+        item.body.gravity.y = (Math.random() * 5) + beta;
     }, this);
 }
 
