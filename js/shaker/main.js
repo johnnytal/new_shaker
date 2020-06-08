@@ -43,12 +43,12 @@ function deviceMotion(event){
 }
 
 function handleOrientation(event){
-	gamma = Math.round(event.gamma);  // -90,90 X	
-	beta = Math.round(event.beta);  // -180,180 Y	
+	gamma = Math.round(event.gamma);  // -90,90	
+	beta = Math.round(event.beta);  // -180,180
 	
 	Phaser.Actions.Call(group.getChildren(), function(item) {
-        item.body.gravity.x = (Math.random() * 5) + gamma;
-        item.body.gravity.y = (Math.random() * 5) + beta;
+        item.body.gravity.y = gamma * 3;
+        item.body.gravity.x = beta * 1.5;
     }, this);
 }
 
