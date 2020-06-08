@@ -47,8 +47,8 @@ function handleOrientation(event){
 	beta = Math.round(event.beta);  // -180,180
 	
 	Phaser.Actions.Call(group.getChildren(), function(item) {
-        item.body.gravity.y = gamma * 3;
-        item.body.gravity.x = beta * 1.5;
+        item.body.velocity.y = -gamma * 3;
+        item.body.velocity.x = beta * 1.5;
     }, this);
 }
 
