@@ -3,13 +3,13 @@ function create(){
 	 
     group = this.physics.add.group({
         defaultKey: 'rice',
-        bounceX: 0.2,
-        bounceY: 0.2,
+        bounceX: 0.1,
+        bounceY: 0.1,
         collideWorldBounds: true
     });
     
-    for (x = 0; x < 10; x++){
-	     var rice = group.create(200 + x * 20, 300).setGravity(0, Phaser.Math.Between(465, 515));
+    for (x = 0; x < 20; x++){
+	     var rice = group.create(230 + x * 30, 300).setVelocity(0, 0);
 	     rice.setScale(0.2);
 	     rice.setTint(0xffffff * Math.random());
 	     
@@ -27,7 +27,7 @@ function create(){
 		window.addEventListener('deviceorientation', handleOrientation);
 	}
 	
-    //plugIns();
+    plugIns();
     //initAd();
 }
 
@@ -47,15 +47,17 @@ function handleOrientation(event){
 	beta = Math.round(event.beta);  // -180,180
 	
 	Phaser.Actions.Call(group.getChildren(), function(item) {
-        item.body.velocity.y = -gamma * 3;
-        item.body.velocity.x = beta * 1.5;
+        item.body.velocity.y = -gamma * 6 + (Math.random() * 5);
+        item.body.velocity.x = beta * 3 + (Math.random() * 5);
     }, this);
 }
 
 function playSound(body){
 	if (Math.abs(body.gameObject.body.velocity.y) > 1.8){
 		sfxToPlay = sfxs[Phaser.Math.Between(0, 7)];
-		sfxToPlay.volume = Math.abs(body.gameObject.body.velocity.y) / 10;
+		sfxToPlay.volume = Math.abs(body.gameObject.body.velocity.y) / 7;
+		if (sfxToPlay.volume > 1) sfxToPlay.volume = 1;
+		
 		sfxToPlay.play();
 	}
 }
