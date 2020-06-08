@@ -1,16 +1,14 @@
 function create(){  
-	this.physics.world.gravity.y = 60;
-	 
     group = this.physics.add.group({
         defaultKey: 'rice',
-        bounceX: 0.1,
-        bounceY: 0.1,
+        bounceX: 0,
+        bounceY: 0,
         collideWorldBounds: true
     });
     
-    for (x = 0; x < 20; x++){
-	     var rice = group.create(230 + x * 30, 300).setVelocity(0, 0);
-	     rice.setScale(0.2);
+    for (x = 0; x < 25; x++){
+	     var rice = group.create(200 + x * 30, 300).setVelocity(0, 0);
+	     rice.setScale(Phaser.Math.Between(8, 24) / 100);
 	     rice.setTint(0xffffff * Math.random());
 	     
 	     rice.body.onWorldBounds = true;
@@ -18,10 +16,6 @@ function create(){
     }
     
     loadSfx();
-
-	if (window.DeviceMotionEvent) {
-	  	//window.addEventListener('devicemotion', deviceMotion);
-	}
 	
 	if (window.DeviceOrientationEvent) {
 		window.addEventListener('deviceorientation', handleOrientation);
@@ -31,35 +25,22 @@ function create(){
     //initAd();
 }
 
-
-function deviceMotion(event){
-	accelX = Math.round(event.acceleration.x);
-	accelY = Math.round(event.acceleration.y);
-	
-    Phaser.Actions.Call(group.getChildren(), function(item) {
-        item.body.velocity.x = (Math.random() * 5) + accelX * 5;
-        item.body.velocity.y = (Math.random() * 5) + accelY * 5;
-    }, this);
-}
-
 function handleOrientation(event){
 	gamma = Math.round(event.gamma);  // -90,90	
 	beta = Math.round(event.beta);  // -180,180
 	
 	Phaser.Actions.Call(group.getChildren(), function(item) {
-        item.body.velocity.y = -gamma * 6 + (Math.random() * 5);
-        item.body.velocity.x = beta * 3 + (Math.random() * 5);
+        item.body.velocity.y = -gamma * 18 + (Math.random() * 10);
+        item.body.velocity.x = beta * 9 + (Math.random() * 10);
     }, this);
 }
 
 function playSound(body){
-	if (Math.abs(body.gameObject.body.velocity.y) > 1.8){
-		sfxToPlay = sfxs[Phaser.Math.Between(0, 7)];
-		sfxToPlay.volume = Math.abs(body.gameObject.body.velocity.y) / 7;
-		if (sfxToPlay.volume > 1) sfxToPlay.volume = 1;
-		
-		sfxToPlay.play();
-	}
+	sfxToPlay = sfxs[Phaser.Math.Between(0, 7)];
+	sfxToPlay.volume = Math.abs(body.gameObject.body.velocity.y) / 12;
+	if (sfxToPlay.volume > 1) sfxToPlay.volume = 1;
+	
+	sfxToPlay.play();
 }
 
 function loadSfx(){
