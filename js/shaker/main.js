@@ -6,16 +6,33 @@ function create(){
         collideWorldBounds: true
     });
     
-    for (x = 0; x < 25; x++){
-	     var rice = group.create(200 + x * 30, 300).setVelocity(0, 0);
-	     rice.setScale(Phaser.Math.Between(8, 24) / 100);
+    blues = [
+    	'C3','Eb3','F3','F#3','G3','Bb3',
+   		'C4','Eb4','F4','F#4','G4','Bb4'
+    ];
+    
+    osces = [];
+    reverbs = [];
+    rices = [];
+    
+    for (x = 0; x < 10; x++){
+	     var rice = group.create(200 + x * 50, 300).setVelocity(0, 0);
+	     rice.setScale(Phaser.Math.Between(12, 36) / 100);
 	     rice.setTint(0xffffff * Math.random());
 	     
 	     rice.body.onWorldBounds = true;
 	     this.physics.world.on('worldbounds', playSound);
+	     
+		 rices.push(rice);
+		
+	     osces[x] = T("cosc", {wave: 'tri', beats: 5, mul: 0.2});
+	     reverbs[x] = T("reverb", {room:0.9, damp:0.4, mix: 0.5}, osces[x]);
+	     
+	     frequency = teoria.note(blues[x]).fq();
+	     osces[x].set({freq: frequency});
     }
     
-    loadSfx();
+    //loadSfx();
 	
 	if (window.DeviceOrientationEvent) {
 		window.addEventListener('deviceorientation', handleOrientation);
@@ -36,11 +53,8 @@ function handleOrientation(event){
 }
 
 function playSound(body){
-	sfxToPlay = sfxs[Phaser.Math.Between(0, 7)];
-	sfxToPlay.volume = Math.abs(body.gameObject.body.velocity.y) / 12;
-	if (sfxToPlay.volume > 1) sfxToPlay.volume = 1;
-	
-	sfxToPlay.play();
+	index = rices.indexOf(body.gameObject);
+    T("perc", {a: 30, d:150, s:300, r: 100}, reverbs[index]).on("ended", function() {}).bang().play();
 }
 
 function loadSfx(){
