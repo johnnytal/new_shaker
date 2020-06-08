@@ -5,14 +5,11 @@ function preload (){
 
     this.load.audioSprite('shakerSound', 'assets/shaker/audio/audio.json', 'assets/shaker/audio/grains.mp3');
     
-    this.load.audio('grain1', 'assets/shaker/audio/grain1.mp3');
-    this.load.audio('grain2', 'assets/shaker/audio/grain2.mp3');
-    this.load.audio('grain3', 'assets/shaker/audio/grain3.mp3');
-    this.load.audio('grain4', 'assets/shaker/audio/grain4.mp3');
-    this.load.audio('grain5', 'assets/shaker/audio/grain5.mp3');
-    this.load.audio('grain6', 'assets/shaker/audio/grain6.mp3');
-    this.load.audio('grain7', 'assets/shaker/audio/grain7.mp3');
-    this.load.audio('grain8', 'assets/shaker/audio/grain8.mp3');
+    this.load.audio('grain1', 'assets/shaker/audio/a.mp3');
+    this.load.audio('grain2', 'assets/shaker/audio/c.mp3');
+    this.load.audio('grain3', 'assets/shaker/audio/d.mp3');
+    this.load.audio('grain4', 'assets/shaker/audio/f.mp3');
+    this.load.audio('grain5', 'assets/shaker/audio/g.mp3');
 }
 
 function progressBar(_this){
