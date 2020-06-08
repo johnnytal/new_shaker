@@ -8,6 +8,8 @@ function create(){
     
     rices = [];
     
+    resetSound = true;
+    
     for (x = 0; x < 10; x++){
 	     var rice = group.create(200 + x * 50, 300).setVelocity(0, 0);
 	     rice.setScale(Phaser.Math.Between(12, 36) / 100);
@@ -34,18 +36,26 @@ function handleOrientation(event){
 	beta = Math.round(event.beta);  // -180,180
 	
 	Phaser.Actions.Call(group.getChildren(), function(item) {
-        item.body.velocity.y = -gamma * 18 + (Math.random() * 10);
+        item.body.velocity.y = -gamma * 18 + (Math.random() * 10) - item.displayWidth * 7;
         item.body.velocity.x = beta * 9 + (Math.random() * 10);
     }, this);
 }
 
 function playSound(body){
-	index = rices.indexOf(body.gameObject);
+	var item = body.gameObject;
     
     var sfxToPlay = sfxs[Phaser.Math.Between(0, sfxs.length-1)];
-    if (!sfxToPlay.isPlaying){
+    
+    if (resetSound){ // resetSound for each sprite indivdually!
+    	sfxToPlay.setVolume = item.body.velocity.y / 7;
+    	
     	sfxToPlay.play();
-    }
+    	
+    	resetSound = false;
+    	setTimeout(function() {
+    		resetSound = true;
+    	}, 500);
+    }   
 }
 
 function loadSfx(){
